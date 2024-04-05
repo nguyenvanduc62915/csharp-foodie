@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = "Admin/_Master";
+}
+
+<div class="card">
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-info"><p>@ViewBag.Message</p></div>
+    }
+    <div class="card-header">
+        <h3>Quản lý Tài Khoản</h3>
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>PhoneNumber</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var account in Model)
+                    {
+                        <tr>
+                            
+                            <td>@account.UserName</td>
+                            <td>@account.FirstName</td>
+                            <td>@account.LastName</td>
+                            <td>@account.PhoneNumber</td>
+                            <td>
+                                @foreach (var role in account.Roles)
+                                {
+                                    <span>@role</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="AccountManagement" asp-action="Edit" asp-route-id="@account.Id" class="btn btn-primary">Edit</a>
+                                <button data-id="@account.Id" type="button" class="btn btn-danger delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script src="~/admin/js/remove.js"></script>
+    <script>
+        deleteRow("AccountManagement")
+    </script>
+}

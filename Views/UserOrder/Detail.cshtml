@@ -1,0 +1,55 @@
+﻿@* @model AppCore.Models.ViewModels.CategoryRequest *@
+@{
+    Layout = "Client/_Master";
+    var orderId = ViewData["orderId"];
+    var orderItems = ViewData["OrderItems"];
+    var amount = ViewData["Amount"];
+}
+
+<div class="breadcrumb-section breadcrumb-bg" style="background-image: url('https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/2022/12/background-tet3.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin-top: 0px;
+        margin-bottom:0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <h1></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-8 col-md-12" style="margin: auto; padding-top:30px">
+    <div class="cart-table-wrap">
+        <div class="card-header">
+            <strong class="text-right">Total : @string.Format("{0:#,0} VNĐ", amount)</strong>
+        </div>
+        <table class="cart-table" >
+            <thead class="cart-table-head">
+                <tr class="table-head-row">
+                    <th>Product Name</th>
+                    <th>Image</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var orderItem in orderItems as List<OrderItemViewModel>)
+                {
+                    <tr>
+                        <td>@orderItem.ProductName</td>
+                        <td><img style="width: 90px; height: 40px; object-fit: cover;" src="@orderItem.Image" alt="" srcset=""></td>
+                        <td>x @orderItem.Quantity</td>
+                        <td>@string.Format("{0:#,0} VNĐ", (orderItem.Price * orderItem.Quantity))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p></p>
+        <a asp-action="Index" asp-controller="Home" class="boxed-btn black">Back to Shop</a>
+    </div>
+</div>

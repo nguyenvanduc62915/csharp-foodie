@@ -1,0 +1,83 @@
+@{
+    Layout = "Admin/_Layout";
+}
+@section Head {
+    @RenderSection("Head", required: false)
+}
+
+<div class="theme-loader">
+    <div class="ball-scale">
+        <div class='contain'>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+            <div class="ring">
+                <div class="frame"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Pre-loader end -->
+<div id="pcoded" class="pcoded">
+    <div class="pcoded-overlay-box"></div>
+    <div class="pcoded-container navbar-wrapper">
+
+        <partial name="Admin/Partials/_Header"></partial>
+
+        <div class="pcoded-main-container">
+            <div class="pcoded-wrapper">
+                <nav class="pcoded-navbar">
+                    <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                    <div class="pcoded-inner-navbar main-menu">
+                        <partial name="Admin/Partials/_Sidebar"></partial>
+                        @RenderSection("Sidebar", required: false)
+                    </div>
+                </nav>
+
+                <div class="pcoded-content">
+                    <div class="pcoded-inner-content">
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <div class="page-body">
+                                    @RenderBody()   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fixed-button">
+            <a href="#" target="_blank" class="btn btn-md btn-primary">Go to to</a>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    @RenderSection("Script", required: false)
+}

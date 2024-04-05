@@ -1,0 +1,86 @@
+﻿@model AppCore.Models.Product
+
+@{
+    Layout = "Client/_Master";
+    ViewData["Title"] = "Page";
+    var products = ViewData["Products"] as IEnumerable<Product>;
+    var categories = ViewData["Categories"] as IEnumerable<Category>;
+}
+
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg" style="background-image: url('https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/2022/12/background-tet3.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin-top: 0px;
+        margin-bottom:0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>See more Details</p>
+                    <h1>Single Product</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+<!-- single product -->
+<div class="single-product mt-150 mb-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="single-product-img">
+                    <img src="@Model.Image" alt="">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="single-product-content">
+                    <p class="single-product-pricing"><strong>Danh mục: </strong>@Model.Category.Name</p>
+                    <h3><strong>Tên sản phẩm: </strong>@Model.Name</h3>
+                    <p style="font-size:30px"> @string.Format("{0:#,0} VNĐ", Model.Price) </p>
+                    <p><strong>Miêu Tả :</strong>@Model.Description</p>
+                    <div class="single-product-form">
+                        <form action="index.html">
+                            <input id="quantityInput" type="number" placeholder="0" min="0">
+                        </form>
+                        
+                        <button class="btn btn-warning btn-rounded" onclick="addToCart(@Model.ProductId, '@Url.Action("Add", "Cart")', @Model.Price)" data-mdb-ripple-init>
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+
+                        
+                    </div>
+                    <h4>Share:</h4>
+                    <ul class="product-share">
+                        <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href=""><i class="fab fa-twitter"></i></a></li>
+                        <li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end single product -->
+@section Script {
+    <script>
+        function addToCart(productId, addToCartUrl, price) {
+            var quantity = document.getElementById('quantityInput').value;
+
+            // Use AJAX to send the productId to the CartController's Add action
+            $.ajax({
+                url: addToCartUrl + '/' + productId + '/' + price + '/' + quantity,
+                type: 'GET',
+                success: function (response) {
+                    alert("Sản phẩm đã thêm thành công vào giỏ hàng");
+                },
+                error: function (error) {
+                    console.error("Error adding product to cart:", error);
+                }
+            });
+        }
+    </script>
+}

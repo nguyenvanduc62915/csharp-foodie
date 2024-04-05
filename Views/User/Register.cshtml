@@ -1,0 +1,45 @@
+@model AppCore.Models.ViewModels.RegisterRequest
+@{
+    Layout = "Login/_Layout";
+    @* ViewData["Title"] = "User login"; *@
+}
+
+<!-- Signup Form -->
+
+<div class="form login">
+    <div class="form-content">
+        <header>Signup</header>
+        <form method="post" asp-controller="User" asp-action="PostRegister">
+            <div class="field input-field">
+                <input type="text" placeholder="First Name" required asp-for="FirstName">
+            </div>
+            <div class="field input-field">
+                <input type="text" placeholder="Last Name" required asp-for="LastName">
+            </div>
+            <div class="field input-field">
+                <input type="text" placeholder="Phone Number" required asp-for="PhoneNumber">
+            </div>
+            <div class="field input-field">
+                <input type="email" placeholder="Email" class="input" required asp-for="Email">
+            </div>
+
+            <div class="field input-field">
+                <input type="password" placeholder="Create password" class="password" required asp-for="Password">
+            </div>
+
+            <div class="field input-field">
+                <input type="password" placeholder="Confirm password" class="password" required>
+            </div>
+            <div class="field input-field">
+                <input type="address" placeholder="Your Address" asp-for="Address"></textarea>
+            </div>
+            <div class="field button-field">
+                <button>Signup</button>
+            </div>
+        </form>
+
+        <div class="form-link">
+            <span>Already have an account? <a asp-controller="User" asp-action="Login">Login</a></span>
+        </div>
+    </div>
+</div>

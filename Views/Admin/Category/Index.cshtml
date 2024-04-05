@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "Admin/_Master";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4>Danh Sách Sản Phẩm </h4>
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Model)
+                    {
+                        <tr>
+                            <th scope="row">@category.CategoryId</th>
+                            <td>@category.Name</td>
+                            <td><img style="width: 100px; height: 100px; object-fit: cover;" src="@category.Image" alt="" srcset=""></td>
+                            <td>
+                                @if (category.Active == false)
+                                {
+                                    <span style="color:red">H?t hàng</span>
+                                }
+                                else
+                                {
+                                    <span style="color: blue">C?n hàng</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="Category" asp-action="Edit" asp-route-categoryId="@category.CategoryId" class="btn btn-primary">Edit</a>
+                                <button type="button" data-id="@category.CategoryId" class="btn btn-danger delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Script {
+    <script src="~/admin/js/remove.js"></script>
+    <script>
+        deleteRow("Category")
+    </script>
+}

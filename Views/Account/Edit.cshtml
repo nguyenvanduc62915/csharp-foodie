@@ -1,0 +1,91 @@
+﻿@model AppCore.Models.Account
+@{
+    ViewData["Title"] = "Edit Profile";
+    Layout = "Admin/_Master";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Cập nhật hồ sơ</h1>
+        </div>
+    </div>
+    <form asp-action="Update" method="post" enctype="multipart/form-data">
+        <div class="container rounded bg-white mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-5 border-right">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                        <img id="previewImage" class="rounded-circle mt-3" width="150px" src="">
+                        <span class="font-weight-bold">Tên người dùng</span>
+                        <span class="text-black-50">Email người dùng</span><span> </span>
+                        <label for="imageInput" class="labels">Ảnh đại diện</label>
+                        <input name="ImageUpload" type="file" class="form-control" id="imageInput" onchange="displayImage(this)" />
+                    </div>
+                </div>
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="labels">First Name</label>
+                                <input asp-for="FirstName" type="text" class="form-control" placeholder="first name" value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="labels">Last Name</label>
+                                <input asp-for="LastName" type="text" class="form-control" placeholder="last name" value="">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label asp-for="PhoneNumber" class="labels">Phone Number</label>
+                                <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="phone number" value="">
+                            </div>
+                            <div class="col-md-12">
+                                <label asp-for="Address" class="labels">Address</label>
+                                <input asp-for="Address" type="text" class="form-control" placeholder="Address" value="">
+                            </div>
+                            <div class="col-md-12">
+                                <label asp-for="Email" class="labels">Email</label>
+                                <input asp-for="Email" type="text" class="form-control" placeholder="email" value="">
+                            </div>
+                        </div>
+
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function displayImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#previewImage').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>

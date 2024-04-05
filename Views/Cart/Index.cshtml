@@ -1,0 +1,160 @@
+﻿@model AppCore.Models.ViewModels.OrderRequest
+@{
+    Layout = "Client/_Master";
+    ViewData["Title"] = "Cart";
+    var orderItems = ViewData["OrderItems"] as List<OrderItemViewModel>;
+    decimal totalAmount = 0;
+
+    foreach (var item in orderItems)
+    {
+        totalAmount += item.Price * item.Quantity;
+    }
+    bool isAuthenticated = Context.User.Identity.IsAuthenticated;
+}
+
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg" style="background-image: url('https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/2022/12/background-tet3.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin-top: 0px;
+        margin-bottom:0px">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Attractive & Science Fiction</p>
+                    <h1>Cart</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+<!-- cart -->
+<div class="cart-section mt-150 mb-150" style="background-color: rgb(249,239,214);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+                <div class="cart-table-wrap">
+                    <table class="cart-table">
+                        <thead class="cart-table-head">
+                            <tr class="table-head-row">
+                                <th class="product-remove"></th>
+                                <th class="product-image"><strong>Product Image</strong></th>
+                                <th class="product-name"><strong>Name</strong></th>
+                                <th class="product-price"><strong>Price</strong></th>
+                                <th class="product-quantity"><strong>Quantity</strong></th>
+                                <th class="product-total"><strong>Total</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in orderItems)
+                            {
+                                <tr class="table-body-row">
+                                    <td class="product-remove" data-id="@item.ProductId">
+                                        <a class="remove-item"><i class="fa-regular fa-trash"></i></a>
+                                    </td>
+                                    <td class="product-image"><img src="@item.Image" alt=""></td>
+                                    <td class="product-name">@item.ProductName</td>
+                                    <td class="product-price">@string.Format("{0:#,0} VNĐ", item.Price)</td>
+                                    <td class="product-quantity">
+                                        <input type="number" id="quantity_@item.ProductId" placeholder="@item.Quantity" min="1" oninput="updateQuantity(@item.ProductId)">
+                                    </td>
+                                    <td class="product-total" id="total_@item.ProductId">
+                                        @string.Format("{0:#,0} VNĐ", (item.Price * item.Quantity))
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <p></p>
+                    <a asp-action="Index" asp-controller="Home" class="boxed-btn black">Back to Shop</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="total-section">
+                    <table class="total-table">
+                        <thead class="total-table-head">
+                            <tr class="table-total-row">
+                                <th><strong>Total</strong></th>
+                                <th><strong>Price</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="total-data">
+                                <td><strong>Total: </strong></td>
+                                <td>@string.Format("{0:#,0} VNĐ", totalAmount)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="cart-buttons">
+                        <a asp-action="Index" asp-controller="Cart" class="boxed-btn black">Update Cart</a>
+                        @if (isAuthenticated && orderItems.Count > 0)
+                        {
+                            <a asp-action="Index" asp-controller="Checkout" class="boxed-btn black">Check Out</a>
+                        }
+                        else if (isAuthenticated && orderItems.Count == 0)
+                        {
+                            <a class="boxed-btn black">Cart Empty</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Login" asp-controller="User" class="boxed-btn black">You need to login</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Script {
+    <script>
+        $(".remove-item").on("click", function () {
+            var productId = $(this).closest("td.product-remove").data("id");
+
+            $.ajax({
+                type: "POST",
+                url: "/Cart/Remove/" + productId,
+                success: function (result) {
+                    if (result.success) {
+                        location.reload();
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                error: function () {
+                    alert("Đã xảy ra lỗi khi xóa sản phẩm.");
+                }
+            });
+        });
+
+        function updateQuantity(productId) {
+            var newQuantity = $("#quantity_" + productId).val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Cart/UpdateQuantity",
+                data: { productId: productId, newQuantity: newQuantity },
+                success: function (result) {
+                    if (result.success) {
+                        updateTotal();
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                error: function () {
+                    alert("Đã xảy ra lỗi khi cập nhật quantity.");
+                }
+            });
+        }
+
+        function updateTotal() {
+            // Cập nhật tổng giá trị hoặc thực hiện các thay đổi khác sau khi cập nhật số lượng
+        }
+    </script>
+}
+<!-- end cart -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

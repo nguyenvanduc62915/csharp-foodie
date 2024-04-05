@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "Admin/_Master";
+}
+
+<div class="card">
+    @if (ViewBag.Message != null) {
+        <div class="alert alert-info"><p>@ViewBag.Message</p></div>
+    }
+    <div class="card-header">
+        <h4> Phương Thức Thanh Toán</h4>
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var paymentMethod in Model) {
+                        <tr>
+                            <th scope="row">@paymentMethod.PaymentMethodId</th>
+                            <td>@paymentMethod.Name</td>
+                            <td>@paymentMethod.Active</td>
+                            <td>
+                                <a asp-controller="PaymentMethod" asp-action="Edit" asp-route-paymentMethodId="@paymentMethod.PaymentMethodId" class="btn btn-primary">Edit</a>
+                                <button data-id="@paymentMethod.PaymentMethodId" type="button" class="btn btn-danger delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script src="~/admin/js/remove.js"></script>
+    <script>
+        deleteRow("Paymentmethod")
+    </script>
+}

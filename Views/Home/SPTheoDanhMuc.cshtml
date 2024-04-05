@@ -1,0 +1,77 @@
+﻿@model List<AppCore.Models.Product>
+
+@{
+    Layout = "Client/_Master";
+    ViewData["Title"] = "Home Page";
+    var products = ViewData["Products"] as IEnumerable<Product>;
+    var categories = ViewData["Categories"] as IEnumerable<Category>;
+
+}
+
+<!-- hero area -->
+<div class="breadcrumb-section breadcrumb-bg" style="background-image: url('https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/2022/12/background-tet3.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin-top: 0px;
+        margin-bottom:0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Sản phẩm bạn mong muốn</p>
+                    <h1>Shop</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end hero area -->
+<!-- product section -->
+<div class="product-section mt-150 mb-150"style="background-image: url('https://i.pinimg.com/originals/76/a8/ea/76a8ea33d8fbc7ed64732b66528b027b.png ');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin-top: 0px;
+        margin-bottom:0px">
+    <div class="container">
+
+
+        @* Product *@
+        <div class="row product-container container rounded mt-5 mb-5" style="background-color: rgb(249,239,214);">
+            @foreach (var product in Model)
+            {
+                <div class="col-lg-4 col-md-6 text-center" style="padding-top: 7px">
+                    <div class="single-product-item" style="  width: 320px;margin-left: auto; margin-right: auto;">
+                        <div class="product-image" style="border-top-left-radius: 7px; border-top-right-radius: 7px; overflow: hidden">
+                            <a asp-action="SingleProduct" asp-controller="Home" asp-route-productId="@product.ProductId">
+                                <img src="@product.Image" alt="" style="width: 100%; height: 210px;">
+                            </a>
+                        </div>
+                        <div class="product-image" style="background-color: #f19345; border-bottom-left-radius: 7px; border-bottom-right-radius: 7px">
+                            <br />
+                            <h3 style="color: white;">@product.Name</h3>
+                            <p class="product-price">
+                                <span style="text-align:left">@product.Description</span>
+                                <strong class="price">@string.Format("{0:#,0} VNĐ", product.Price)</strong>
+                            </p>
+
+                            <a class="cart-btn" data-id="@product.ProductId" style="margin-bottom: 7px; background-color: crimson"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- end product section -->
+@section Script {
+    <script>
+        addToCart()
+    </script>
+}

@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "Admin/_Master";
+}
+
+<div class="card">
+    @if (ViewBag.Message != null) {
+        <div class="alert alert-info"><p>@ViewBag.Message</p></div>
+    }
+    <div class="card-header">
+        <h3>Sản Phẩm</h3>
+        <p>Tổng số sản phẩm: @ViewBag.TotalProducts</p>
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>
+                            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.SortByName })
+                        </th>
+                        <th>Category</th>
+                        <th>Image</th>
+                        <th>
+                            @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.SortByPrice })
+                        </th>
+                        <th class ="text-center">Quantity</th>
+                        <th>Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model) {
+                        <tr>
+                            <th scope="row">@product.ProductId</th>
+                            <td>@product.Name</td>
+                            <td>@product.CategoryName</td>
+                            <td><img style="width: 100px; height: 100px; object-fit: cover;" src="@product.Image" alt="" srcset=""></td>
+                            <td>@string.Format("{0:#,0} VNĐ", product.Price)</td>
+                            <td class="text-center">@product.Quantity</td>
+                            <td>
+                                @if (product.Active == false)
+                                {
+                                    <span style="color:red">Hết hàng</span>
+                                }
+                                else
+                                {
+                                    <span style="color: blue">Còn hàng</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-controller="Product" asp-action="Edit" asp-route-productId="@product.ProductId" class="btn btn-primary">Edit</a>
+                                <button data-id="@product.ProductId" type="button" class="btn btn-danger delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script src="~/admin/js/remove.js"></script>
+    <script>
+        deleteRow("Product")
+    </script>
+}

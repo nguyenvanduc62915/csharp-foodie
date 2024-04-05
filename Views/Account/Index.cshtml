@@ -1,0 +1,57 @@
+﻿@model AppCore.Models.Account
+@{
+    Layout = "Admin/_Master";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            
+        </div>
+    </div>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-5 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <label for="imageInput" class="labels">Ảnh đại diện</label>
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                    <img id="previewImage" class="rounded-circle mt-3" width="150px" src="@Model.Image">
+                    <span class="font-weight-bold">@Model.FirstName @Model.LastName</span>
+                    <span class="text-black-50">@Model.UserName</span><span> </span>
+                </div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">First Name</label>
+                            <input type="text" class="form-control" placeholder="first name" value="@Model.FirstName">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Last Name</label>
+                            <input type="text" class="form-control" value="@Model.LastName" placeholder="last name">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Phone Number</label>
+                            <input type="text" class="form-control" placeholder="phone number" value="@Model.PhoneNumber">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Address</label>
+                            <input type="text" class="form-control" placeholder="Address" value="@Model.Address">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            <input type="text" class="form-control" placeholder="email" value="@Model.UserName">
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <p><a asp-controller="Account" asp-action="Edit" class="btn btn-primary profile-button">Edit Profile</a></p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

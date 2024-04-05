@@ -1,0 +1,42 @@
+﻿@* @model AppCore.Models.ViewModels.CategoryRequest *@
+@{
+    Layout = "Admin/_Master";
+    var orderId = ViewData["orderId"];
+    var orderItems = ViewData["OrderItems"];
+    var amount = ViewData["Amount"];
+}
+
+@* <h1>Order Detail  - @orderId</h1> *@
+
+<div class="card">
+    <div class="card-header">
+        <h4>Order Detail / @orderId </h4>
+
+        <strong class="text-right">Total : @string.Format("{0:#,0} VNĐ",amount)</strong>
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Image</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var orderItem in orderItems as List<OrderItemViewModel>) {
+                        <tr>
+                            <td>@orderItem.ProductName</td>
+                            <td><img style="width: 90px; height: 40px; object-fit: cover;" src="@orderItem.Image" alt="" srcset=""></td>    
+                            <td>x @orderItem.Quantity</td>
+                            <td>@string.Format("{0:#,0} VNĐ",(orderItem.Price * orderItem.Quantity))</td>        
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<button class="btn btn-primary w-25">Print bill pdf</button>

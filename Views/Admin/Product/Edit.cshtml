@@ -1,0 +1,71 @@
+﻿@model AppCore.Models.ViewModels.ProductRequest
+@{
+    Layout = "Admin/_Master";
+    var categories = ViewData["categories"] as IEnumerable<Category>;
+    var product = ViewData["Product"] as Product;
+}
+<h4>Sửa Thông Tin Sản Phẩm</h4>
+
+<div class="card-block">
+    <h4 class="sub-title">Create Product</h4>
+    <form method="post" asp-controller="Product" asp-action="Update" asp-route-productId="@product.ProductId" enctype="multipart/form-data">
+        @if (ViewBag.Message != null) {
+            <div class="alert alert-info">
+                <p>@ViewBag.Message</p>
+            </div>
+        }
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="Name" value="@product.Name"  required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-10">
+                <select class="form-control" asp-for="CategoryId" required>
+                    @foreach (var category in categories) {
+                        <option value="@category.CategoryId">@category.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Image</label>
+            <div class="col-sm-10">
+                <input name="ImageUpload" type="file" class="form-control" id="imageInput" onchange="displayImage(this)" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" asp-for="Price" value="@product.Price" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Quantity</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" asp-for="Quantity" value="@product.Quantity" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+                <textarea name="Description" id="" cols="30" rows="10">@product.Description</textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-7 col-xs-12">
+                <div class="checkbox-fade fade-in-primary">
+                    <label>
+                        <input type="checkbox" asp-for="Active"  checked="@(product.Active)"/>
+                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                        <span class="text-inverse">Active</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

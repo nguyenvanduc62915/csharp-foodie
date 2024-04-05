@@ -1,0 +1,12 @@
+.shopping-cart .quantity {
+    background-color: #F28123;
+    top: 0;
+    right: 0;
+    border-radius: 5rem;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 

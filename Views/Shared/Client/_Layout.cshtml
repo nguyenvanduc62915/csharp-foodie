@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <partial name="Client/Partials/_Head"></partial>
+    @RenderSection("Head", required: false)
+</head>
+<body>
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+	
+	
+
+    @RenderBody()
+	
+
+	
+	<partial name="Client/Partials/_Script"></partial>
+    @RenderSection("Script", required: false)
+</body>
+</html>

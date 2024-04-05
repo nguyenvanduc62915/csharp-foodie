@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "Admin/_Master";
+    
+}
+<div class="card">
+    <div class="card-header">
+        <h4>Đặt Hàng</h4>
+        <div class="d-flex" align="center">
+            <p style="margin-right: 20px">Tổng số lượng đơn hàng: @ViewBag.TotalOrders</p>
+            <p style="margin-right: 20px">Tổng số lượng đơn hàng hôm nay: @ViewBag.TotalOrdersToday</p>
+            <p>Tổng giá trị đơn hàng: @string.Format("{0:#,0} VNĐ", ViewBag.TotalOrdersAmount)</p>
+        </div>
+    </div>
+</div>
+
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Receiver Name</th>
+                        <th>Receiver PhoneNumber</th>
+                        <th>Shipping Address</th>
+                        <th>TotalAmount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach (var order in Model) {
+                        <tr>
+                            <th scope="row">@order.OrderId</th>
+                            <td>@order.ReceiverName</td>
+                            <td>@order.ReceiverPhoneNumber</td>
+                            <td>@order.ShippingAddress</td>
+                            <td>@string.Format("{0:#,0} VNĐ",order.TotalAmount)</td>
+                        <td>
+                            @if (order.Status == "Pending")
+                            {
+                                <span style="color:red;font-weight: bold;">Đang xử lý</span>
+                            }
+                            else if (order.Status == "Shipping")
+                            {
+                                <span style="color: green; font-weight: bold;">Đang giao hàng</span>
+                            }
+                            else
+                            {
+                                <span style="color: blue;font-weight: bold;">Đã Hoàn Thành</span>
+                            }
+                            |
+
+                            <a asp-action="Edit" asp-controller="Order" asp-route-orderId="@order.OrderId" class="">Edit</a>
+                        </td>
+                            <td>
+                                
+                                <a asp-action="Detail" asp-controller="Order" asp-route-orderId="@order.OrderId" class="btn btn-primary delete-btn">Detail</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

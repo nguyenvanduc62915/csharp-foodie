@@ -1,0 +1,110 @@
+﻿@model AppCore.Models.ViewModels.OrderRequest
+@{
+    Layout = "Client/_Master";
+    ViewData["Title"] = "Checkout";
+    var orderItems = ViewData["OrderItems"] as List<OrderItemViewModel>;
+    var paymentMethods = ViewData["PaymentMethods"]  as List<PaymentMethod>;
+    decimal totalAmount = 0;
+    string userName = Context.User.Identity.Name;
+    foreach (var item in orderItems) {
+        totalAmount += item.Price * item.Quantity;
+    }
+    bool isAuthenticated = Context.User.Identity.IsAuthenticated;
+
+}
+<div class="breadcrumb-section breadcrumb-bg" style="background-image: url('https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/2022/12/background-tet3.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin-top: 0px;
+        margin-bottom:0px">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Attractive & Science Fiction</p>
+                    <h1>Cart</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-section mt-150 mb-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="checkout-accordion-wrap">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card single-accordion">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Billing Address
+                            </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                            <div class="billing-address-form">
+                                <form class="checkout-form" method="post" asp-action="Checkout" asp-controller="Checkout">
+                                    <p><input type="text" placeholder="Name Receiver" asp-for="ReceiverName"></p>
+                                    <p><input type="tel" placeholder="Phone Receiver" asp-for="ReceiverPhoneNumber"></p>
+                                    <p>
+                                        <select class="form-control mb-3 checkout-form" asp-for="PaymentMethodId" required>
+                                            @foreach(var paymentMethod in paymentMethods) {
+                                                <option value="@paymentMethod.PaymentMethodId">@paymentMethod.Name</option>
+                                            }
+                                        </select>
+                                    </p>
+                                    <input type="hidden" asp-for="TotalAmount" value="@totalAmount">
+                                    <p><textarea id="bill" cols="30" rows="10" placeholder="Address" asp-for="ShippingAddress"></textarea></p>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="order-details-wrap">
+                    <table class="order-details">
+                        <thead>
+                            <tr>
+                                <th>Your order Details</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody class="order-details-body">
+                            @foreach (var item in orderItems) {
+                                <tr class="table-body-row">
+                                    <td class="product-name">@item.ProductName</td>
+                                    <td class="product-total">@string.Format("{0:#,0} VNĐ",(item.Price * item.Quantity))</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tbody class="checkout-details">
+                            <tr>
+                                <td>Total</td>
+                                <td>@string.Format("{0:#,0} VNĐ",totalAmount)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" class="boxed-btn proceed-btn">Place Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Script {
+<script>
+    const proceedBtn = document.querySelector('.proceed-btn')
+    const checkoutForm = document.querySelector('.checkout-form')
+    proceedBtn.addEventListener('click', e => {
+        checkoutForm.submit()
+    })
+</script>
+}

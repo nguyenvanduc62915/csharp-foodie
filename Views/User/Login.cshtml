@@ -1,0 +1,58 @@
+﻿@model AppCore.Models.ViewModels.LoginRequest;
+
+
+@{
+    Layout = "Login/_Layout";
+    // ViewData["Title"] = "User Login";
+}
+
+<div class="form login">
+    <div class="form-content">
+        <header>Login</header>
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-info">@ViewBag.Message</div>
+        }
+        <form method="post" asp-controller="User" asp-action="PostLogin">
+            <div class="field input-field">
+                <input type="email" placeholder="Email" class="input" required asp-for="Email">
+            </div>
+
+            <div class="field input-field">
+                <input type="password" placeholder="Password" class="password" required asp-for="Password">
+            </div>
+
+            <div class="form-link">
+                <a href="#" class="forgot-pass">Forgot password?</a>
+            </div>
+
+            <div class="field button-field">
+                <button>Login</button>
+            </div>
+        </form>
+
+        <div class="form-link">
+    <span>Don't have an account? <a asp-controller="User" asp-action="Register">Signup</a></span>
+        </div>
+    </div>
+
+    @* <div class="line"></div>
+
+    <div class="media-options">
+        <a href="#" class="field facebook">
+            <i class='bx bxl-facebook facebook-icon'></i>
+            <span>Login with Facebook</span>
+        </a>
+    </div>
+
+    <div class="media-options">
+        <a href="#" class="field google">
+            <img src="~/login/images/google.png" alt="" class="google-img">
+            <span>Login with Google</span>
+        </a>
+    </div> *@
+
+</div>
+
+        
+ 

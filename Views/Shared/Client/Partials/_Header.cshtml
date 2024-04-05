@@ -1,0 +1,134 @@
+﻿@{	
+	bool isAuthenticated = Context.User.Identity.IsAuthenticated;
+	string userName = isAuthenticated ? Context.User.Identity.Name : "Guest";
+	var cart = Context.Session.GetObject<Cart>("Cart") ?? null;
+	var products = ViewData["Products"] as IEnumerable<Product>;
+	var categories = ViewData["Categories"] as IEnumerable<Category>;
+}
+
+<!-- header -->
+<div class="top-header-area" >
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-sm-12 text-center">
+				<div class="main-menu-wrap">
+					<!-- logo -->
+					<div class="site-logo">
+						<a asp-action="Index" asp-controller="Home">
+							<img src="~/client/assets/imgstorebook/Logo.png" alt="">
+						</a>
+					</div>
+					<!-- logo -->
+
+					<!-- menu start -->
+					<nav class="main-menu">
+						<ul>
+							<li class="current-list-item"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+							<li><a asp-action="About" asp-controller="Home">Về chúng tôi</a></li>
+							<li><a href="#">Pages</a>
+								<ul class="sub-menu">
+									<li><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+									<li><a asp-action="Index" asp-controller="Cart">Giỏ hàng</a></li>
+									<li><a asp-action="Index" asp-controller="Checkout">Thủ tục thanh toán</a></li>
+									
+								</ul>
+							</li>
+							<li>
+								<a href="#">Danh mục</a>
+								<ul class="sub-menu">
+									@if (categories != null)
+									{
+										foreach (var item in categories)
+										{
+											<li>
+												<a asp-action="SPTheoDanhMuc" asp-controller="Home" asp-route-Id="@item.CategoryId">@item.Name</a>
+											</li>
+										}
+									}
+								</ul>
+							</li>
+							
+							<li style="float: right; padding: 5px">
+								<div class="d-flex align-items-center" style="gap: 5px;">
+									@if (isAuthenticated)
+									{
+										<div class="dropdown text-end">
+											<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle show" 
+											style="padding-top:10px"
+											data-bs-toggle="dropdown" 
+											aria-expanded="true">
+												<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+											</a>
+											<ul class="sub-menu">
+												<li>
+													<a asp-controller="Profile" asp-action="Index">
+														<i class="fas fa-user"></i>
+														User Profile
+													</a>
+												</li>
+												<li>
+													<a asp-controller="UserOrder" asp-action="Detail">
+														<i class="fas fa-shopping-cart"></i>
+														Lịch sử mua hàng
+													</a>
+												</li>
+												<li>
+													<a href="/User/Login">
+														<i class="fas fa-right-from-bracket"></i>
+														Logout
+													</a>
+													</li>
+											</ul>
+										</div>
+										@* <a href="#">@userName</a>
+										 *@
+
+									}
+									else
+									{
+										<a href="/User/Login" name="login"
+											style="border-radius: 30px;
+													background: #007bff;
+													padding-bottom: 5px;
+													padding-top: 5px;">
+											Login</a>
+
+									}
+								</div>
+							</li>
+							<li style="float: right;">
+								<div class="d-flex align-items-center" style="gap: 7px;">									
+									<form class="form-inline" action="@Url.Action("Index", "Home")" method="get">
+										<div class="form-group mx-sm-3 mb-2">
+											<input type="search"
+												   name="searchTerm"
+												   id="searchInput"
+												   class="form-control rounded"
+												   placeholder="Search"
+												   aria-label="Search"
+												   aria-describedby="search-addon" />
+										</div>
+										<button type="submit" class="btn btn-primary mb-2" id="search-addon"><i class="fas fa-search"></i></button>
+										
+										
+									</form>
+									<a class="shopping-cart position-relative" asp-action="Index" asp-controller="Cart">
+										<i class="fas fa-shopping-cart"></i>
+										<span class="quantity position-absolute">
+											@(cart != null ? cart.GetQuantity() : 0)
+										</span>
+									</a>
+								</div>
+							</li>
+							
+						</ul>
+					</nav>					
+					<!-- menu end -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- end header -->
+<script src="https://kit.fontawesome.com/e1190ef1cb.js" crossorigin="anonymous"></script>

@@ -1,0 +1,37 @@
+﻿<div class="card">
+    <div class="card-header">
+        <h4>Orders</h4>
+
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Receiver Name</th>
+                        <th>Receiver PhoneNumber</th>
+                        <th>TotalAmount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <th scope="row">@order.OrderId</th>
+                            <td>@order.ReceiverName</td>
+                            <td>@order.ReceiverPhoneNumber</td>
+                            <td>@string.Format("{0:#,0} VNĐ", order.TotalAmount)</td>
+                            <td>@order.Status</td>
+                            <td>
+                                <a asp-action="Detail" asp-controller="Order" asp-route-orderId="@order.OrderId" class="btn btn-primary delete-btn">Detail</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

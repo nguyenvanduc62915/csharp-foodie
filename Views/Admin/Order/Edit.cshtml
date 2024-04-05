@@ -1,0 +1,23 @@
+﻿@model AppCore.Models.Order
+
+@{
+    Layout = "Admin/_Master";
+    var order = ViewData["Order"] as Order;
+}
+<h2>Edit Order</h2>
+<form asp-action="UpdateStatus" asp-controller="Order" asp-route-orderId="@order.OrderId" method="post">
+    <div class="form-group">
+        <label asp-for="Status" class="control-label">Status:</label>
+        <select asp-for="Status" class="form-control">
+            <option value="Pending" selected="@(Model.Status == "Pending")">Đang xử lý</option>
+            <option value="Shipping" selected="@(Model.Status == "Shipping")">Đang giao hàng</option>
+            <option value="Paid" selected="@(Model.Status == "Paid")">Đã hoàn thảnh</option>
+            <!-- Add more options as needed -->
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="OrderId" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

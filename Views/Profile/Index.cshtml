@@ -1,0 +1,70 @@
+﻿@model AppCore.Models.Account
+@{
+    Layout = "Client/_Master";
+}
+
+
+<div class="breadcrumb-section breadcrumb-bg" style="background-image: url('https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/2022/12/background-tet3.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin-top: 0px;
+        margin-bottom:0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <h1></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product-section mt-150 mb-150" >
+    <div class="container">
+        <div class="row">
+            <h3>Thông tin người dùng</h3>
+        </div>
+    </div>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-5 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <label for="imageInput" class="labels">Ảnh đại diện</label>
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                    <img id="previewImage" class="rounded-circle mt-3" width="150px" src="@Model.Image">
+                    <span class="font-weight-bold">@Model.FirstName @Model.LastName</span>
+                    <span class="text-black-50">@Model.UserName</span><span> </span>
+                </div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">First Name</label>
+                            <input class="form-control" placeholder="first name" value="@Model.FirstName">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Last Name</label>
+                            <input type="text" class="form-control" value="@Model.LastName" placeholder="last name">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Phone Number</label>
+                            <input type="text" class="form-control" placeholder="phone number" value="@Model.PhoneNumber">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            <input type="text" class="form-control" placeholder="email" value="@Model.UserName">
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <p><a asp-controller="Profile" asp-action="Edit" class="btn btn-primary profile-button">Edit Profile</a></p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
